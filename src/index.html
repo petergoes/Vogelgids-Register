@@ -36,7 +36,7 @@
 
   <search>
     <label for="search-input">Welke vogel zoek je?</label>
-    <input id="search-input" type="search" list="options-list" />
+    <input id="search-input" type="search" autocomplete="off" />
     <datalist id="options-list"></datalist>
   </search>
 
@@ -45,9 +45,22 @@
 
   <script type="module">
     const searchInput = document.querySelector('#search-input')
+    const datalist = document.querySelector('#options-list')
     const output = document.querySelector('#page-number')
     searchInput.addEventListener('input', handleOnInput)
     searchInput.addEventListener('change', handleOnChange)
+    searchInput.addEventListener('focus', handleOnFocus)
+    searchInput.addEventListener('blur', handleOnBlur)
+
+    function handleOnFocus() {
+      setTimeout(() => {
+        searchInput.setAttribute('list', datalist.id)
+      }, 10)
+    }
+
+    function handleOnBlur() {
+      searchInput.removeAttribute('list')
+    }
 
     function handleOnInput() {
       output.innerText = ''
