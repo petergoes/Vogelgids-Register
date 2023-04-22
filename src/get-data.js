@@ -30,4 +30,5 @@ export const getData = async () => {
     .then(records => records.map(buildRecord))
     .then(records => records.flat())
     .then(records => records.filter(x => x))
+    .then(records => [...new Set(records)])
 }
