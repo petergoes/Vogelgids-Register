@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Vogelgids Register</title>
+  <style>
+    search {
+      display: none;
+      flex-direction: column;
+    }
+
+    #output-heading {
+      display: none;
+    }
+
+    #output-heading:has(+ #page-number:not(:empty)) {
+      display: block;
+    }
+
+    body:has(datalist:not(:empty)) search {
+      display: flex;
+    }
+
+    body:has(datalist:not(:empty)) #loading-message {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Register ANWB&nbsp;Vogelgids</h1>
+
+  <p id="loading-message">Het register wordt geladen</p>
+
+  <search>
+    <label for="search-input">Welke vogel zoek je?</label>
+    <input id="search-input" type="search" list="options-list" />
+    <datalist id="options-list"></datalist>
+  </search>
+
+  <h2 id="output-heading">Je vind je vogel op pagina:</h2>
+  <output id="page-number"></output>
+
+  <script type="module">
+    const searchInput = document.querySelector('#search-input')
+    const output = document.querySelector('#page-number')
+    searchInput.addEventListener('input', handleOnInput)
+    searchInput.addEventListener('change', handleOnChange)
+
+    function handleOnInput() {
+      output.innerText = ''
+    }
+
+    function handleOnChange(event) {
+      const [, pageNumber] = searchInput.value.match(/\((.+)\)/) || []
+      output.innerText = pageNumber || ''
+    }
+  </script>
+
+  <script type="module">
+    import {getData} from './get-data.js'
+    const datalist = document.querySelector('#options-list')
+
+    const data = await getData()
+    datalist.innerHTML = data
+      .map(record => `<option>${record}</option>`)
+      .join('')
+  </script>
+</body>
+
+</html>
