@@ -6,16 +6,29 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Vogelgids Register</title>
   <style>
+    html {
+      margin-block: 0;
+    }
+
+    body {
+      margin-block: 0;
+      display: grid;
+      height: 100vh;
+      height: 100dvh;
+      grid-template-rows: auto 1fr auto;
+    }
+
     search {
       display: none;
       flex-direction: column;
+      padding-block-end: 1rem;
     }
 
-    #output-heading {
+    #output {
       display: none;
     }
 
-    #output-heading:has(+ #page-number:not(:empty)) {
+    #output:has(+ #page-number:not(:empty)) {
       display: block;
     }
 
@@ -34,19 +47,31 @@
 
   <p id="loading-message">Het register wordt geladen</p>
 
+  <section id="output">
+    <h2>Waar kan ik het vinden?</h2>
+    <p>Je vind <span id="bird-name">je vogel</span> op pagina:</p>
+    <label for="page-number">Pagina nummer:</label>
+    <output id="page-number"></output>
+
+    <p>Dat is ongveer hier:</p>
+    <label for="page-in-range">Locatie in het boek:</label>
+    <input id="page-in-range" type="range" readonly value="0" max="445" />
+  </section>
+
   <search>
+    <pre id="debug"></pre>
     <label for="search-input">Welke vogel zoek je?</label>
     <input id="search-input" type="search" autocomplete="off" />
     <datalist id="options-list"></datalist>
   </search>
 
-  <h2 id="output-heading">Je vind je vogel op pagina:</h2>
-  <output id="page-number"></output>
 
   <script type="module">
     const searchInput = document.querySelector('#search-input')
     const datalist = document.querySelector('#options-list')
     const output = document.querySelector('#page-number')
+    const outputRange = document.querySelector('#page-in-range')
+    const birdName = document.querySelector('#bird-name')
     searchInput.addEventListener('input', handleOnInput)
     searchInput.addEventListener('change', handleOnChange)
     searchInput.addEventListener('focus', handleOnFocus)
@@ -67,8 +92,11 @@
     }
 
     function handleOnChange(event) {
-      const [, pageNumber] = searchInput.value.match(/\((.+)\)/) || []
+      const [, name, pageNumber] = searchInput.value.match(/(.+)\((.+)\)/) || []
+      const [firstPageNumber] = pageNumber.split(',')
+      birdName.innerText = `de ${name}` || 'je vogel'
       output.innerText = pageNumber || ''
+      outputRange.value = firstPageNumber
     }
   </script>
 
