@@ -28,7 +28,11 @@
       display: none;
     }
 
-    #output:has(+ #page-number:not(:empty)) {
+    #output label {
+      display: none;
+    }
+
+    #output:has(#page-number:not(:empty)) {
       display: block;
     }
 
@@ -97,6 +101,7 @@
       birdName.innerText = `de ${name}` || 'je vogel'
       output.innerText = pageNumber || ''
       outputRange.value = firstPageNumber
+      console.log({name, pageNumber, firstPageNumber})
     }
   </script>
 
