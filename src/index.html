@@ -139,12 +139,7 @@
       birdName.innerText = `de ${name}` || 'je vogel'
       output.innerText = pageNumber || ''
       outputRange.value = firstPageNumber.trim()
-
-      if ("virtualKeyboard" in navigator) {
-        navigator.virtualKeyboard.hide();
-      } else {
-        searchInput.blur()
-      }
+      searchInput.blur()
     }
   </script>
 
