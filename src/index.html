@@ -6,16 +6,21 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Vogelgids Register</title>
   <style>
+    @import "https://unpkg.com/open-props";
+    @import "https://unpkg.com/open-props/normalize.light.min.css";
+
     html {
       margin-block: 0;
     }
 
     body {
       margin-block: 0;
+      padding: var(--size-4);
       display: grid;
       height: 100vh;
       height: 100dvh;
       grid-template-rows: auto 1fr auto;
+      gap: var(--size-8);
     }
 
     search {
@@ -24,17 +29,24 @@
       padding-block-end: 1rem;
     }
 
-    #output {
+    #output>* {
       display: none;
+    }
+
+    #output {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-4);
+    }
+
+    #output:has(:where(#page-number:not(:empty)))>* {
+      display: revert;
     }
 
     #output label {
       display: none;
     }
 
-    #output:has(#page-number:not(:empty)) {
-      display: block;
-    }
 
     body:has(datalist:not(:empty)) search {
       display: flex;
@@ -42,6 +54,23 @@
 
     body:has(datalist:not(:empty)) #loading-message {
       display: none;
+    }
+
+
+    h1 {
+      font-size: var(--font-size-fluid-3);
+    }
+
+    h2 {
+      font-size: var(--font-size-fluid-2);
+    }
+
+    #page-number {
+      font-size: var(--font-size-fluid-3);
+    }
+
+    #page-in-range {
+      width: 100%;
     }
   </style>
 </head>
@@ -53,13 +82,18 @@
 
   <section id="output">
     <h2>Waar kan ik het vinden?</h2>
-    <p>Je vind <span id="bird-name">je vogel</span> op pagina:</p>
-    <label for="page-number">Pagina nummer:</label>
-    <output id="page-number"></output>
 
-    <p>Dat is ongveer hier:</p>
-    <label for="page-in-range">Locatie in het boek:</label>
-    <input id="page-in-range" type="range" readonly value="0" max="445" />
+    <div>
+      <p>Je vind <span id="bird-name">je vogel</span> op pagina:</p>
+      <label for="page-number">Pagina nummer:</label>
+      <output id="page-number"></output>
+    </div>
+
+    <div>
+      <p>Dat is ongeveer hier:</p>
+      <label for="page-in-range">Locatie in het boek:</label>
+      <input id="page-in-range" type="range" readonly value="0" max="445" />
+    </div>
   </section>
 
   <search>
