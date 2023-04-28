@@ -116,6 +116,10 @@
     searchInput.addEventListener('blur', handleOnBlur)
 
     function handleOnFocus() {
+      if ("virtualKeyboard" in navigator) {
+        navigator.virtualKeyboard.show();
+      }
+
       setTimeout(() => {
         searchInput.setAttribute('list', datalist.id)
       }, 10)
@@ -134,7 +138,7 @@
       const [firstPageNumber] = pageNumber.split(',')
       birdName.innerText = `de ${name}` || 'je vogel'
       output.innerText = pageNumber || ''
-      outputRange.value = firstPageNumber
+      outputRange.value = firstPageNumber.trim()
 
       if ("virtualKeyboard" in navigator) {
         navigator.virtualKeyboard.hide();
