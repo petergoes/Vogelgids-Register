@@ -5,6 +5,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Vogelgids Register</title>
+  <meta name="description" content="Doorzoek het register van de ANWB Vogelgids van Europa" />
+  <link rel="canonical" href="https://vogelgids-register.netlify.app" />
+  <meta property="og:title" content="Vogelgids Register">
+  <meta name="twitter:title" content="Vogelgids Register">
+
+  <meta property="og:image" content="/apple-touch-icon.png">
+  <meta name="twitter:image" content="/apple-touch-icon.png">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
   <style>
     @import "https://unpkg.com/open-props";
     @import "https://unpkg.com/open-props/normalize.light.min.css";
@@ -151,6 +167,19 @@
     datalist.innerHTML = data
       .map(record => `<option>${record}</option>`)
       .join('')
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        // Scope will be restricted to the path where the service-worker-example.js file is located
+        navigator.serviceWorker.register('/sw.js', {scope: '/'}).then(registration => {
+          console.log('Service Worker registered: ', registration)
+        }).catch(registrationError => {
+          console.log('Service Worker registration failed: ', registrationError)
+        })
+      })
+    }
   </script>
 </body>
 
