@@ -24,6 +24,7 @@
   <style>
     @import "https://unpkg.com/open-props";
     @import "https://unpkg.com/open-props/normalize.light.min.css";
+    @import './rangeinput.css';
 
     html {
       margin-block: 0;
@@ -43,6 +44,11 @@
       display: none;
       flex-direction: column;
       padding-block-end: 1rem;
+    }
+
+    #search-input {
+      padding-inline: var(--size-3);
+      padding-block: var(--size-2);
     }
 
     #output>* {
